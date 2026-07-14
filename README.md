@@ -27,4 +27,4 @@ Before you begin, ensure you have the following installed:
 Clone this repository to your local machine by running the following command in your terminal:
 
 ```bash
-git clone [https://github.com/ShaunCB/product-comparator-demo-v2.git](https://github.com/ShaunCB/product-comparator-demo-v2.git)
+git clone [https://github.com/ShaunCB/CDR-Card-Compare.git](https://github.com/ShaunCB/CDR-Card-Compare.git)
