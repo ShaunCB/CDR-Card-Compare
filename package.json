@@ -1,0 +1,54 @@
+{
+  "homepage": "https://ShaunCB.github.io/product-comparator-demo-v2/",
+  "name": "product-comparator-demo",
+  "version": "0.1.2",
+  "private": true,
+  "resolutions": {
+    "lodash.template": "^4.5.0",
+    "path-parse": "^1.0.7",
+    "ssri": "^8.0.1",
+    "caniuse-lite": "1.0.30001632",
+    "immer": "^8.0.1"
+  },
+  "overrides": {
+    "caniuse-lite": "1.0.30001632"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.9.10",
+    "@material-ui/icons": "^4.2.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
+    "clsx": "^1.0.4",
+    "gh-pages": "^2.0.1",
+    "iso8601-duration": "^1.2.0",
+    "lodash": "^4.17.20",
+    "moment": "^2.24.0",
+    "pluralize": "^8.0.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-redux": "^7.1.0",
+    "redux": "^4.0.1",
+    "redux-logger": "^3.0.6",
+    "redux-promise-middleware": "^6.1.1",
+    "redux-thunk": "^2.3.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "vite": "^5.1.4"
+  },
+  "optionalDependencies": {
+    "fsevents": "^2.3.2"
+  },
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "deploy": "gh-pages -d dist"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ]
+}
