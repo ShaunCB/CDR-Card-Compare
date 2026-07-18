@@ -16,6 +16,7 @@ import { fade } from '@material-ui/core/styles/colorManipulator'
 import { makeStyles } from '@material-ui/core/styles'
 import moment from 'moment'
 import { refreshConout, cleanConout } from '../../store/conout/actions'
+import DOMPurify from 'dompurify';
 import _ from 'lodash';
 
 const useStyles = makeStyles(theme => ({
@@ -69,7 +70,7 @@ const ConsolePanel = (props) => {
           <div key={i}>
             <span className={classes.timestamp}>{moment(msg.timestamp).format('L HH:mm:ss.SSS')}</span>
             {msg.payload.html
-              ? <span style={{color: msg.payload.lvl === 'error' ? 'red' : 'black'}} dangerouslySetInnerHTML={{__html: msg.payload.html}}></span>
+              ? <span style={{color: msg.payload.lvl === 'error' ? 'red' : 'black'}} dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(msg.payload.html)}}></span>
               : <span style={{color: msg.payload.lvl === 'error' ? 'red' : 'black'}}>{msg.payload.txt}</span>
             }
             {msg.payload.obj && <TreeView data={msg.payload.obj}/>}
