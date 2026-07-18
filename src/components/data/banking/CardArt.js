@@ -44,6 +44,10 @@ const resolveImageUri = (imageUri, dataSource) => {
   if (resolved.startsWith('http://')) {
     resolved = 'https://' + resolved.substring(7)
   }
+
+  if (/^(javascript|vbscript):/i.test(resolved)) {
+    return null
+  }
   
   return resolved
 }
