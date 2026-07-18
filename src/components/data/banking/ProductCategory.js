@@ -12,7 +12,7 @@ const ProductCategory = (props) => {
   const { dataSourceIndex, category, products } = props
   return (
     <div>
-      <h4>{translateProductCategory(category)}</h4>
+      <h4>{translateProductCategory(category) || category}</h4>
       {products.sort((a,b)=>(strcomp(a.name, b.name))).map(
         (product, index) => <Product key={index} product={product} dataSourceIndex={dataSourceIndex}/>)}
     </div>

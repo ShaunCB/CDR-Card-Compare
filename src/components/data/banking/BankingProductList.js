@@ -35,7 +35,13 @@ class BankingProductList extends React.Component {
         product.name && product.name.toLowerCase().includes(searchQuery.toLowerCase())
       )
       filteredProducts.forEach(product => {
-        let productCategory = product.productCategory;
+        let productCategory = "Consumer Credit Cards";
+        const n = (product.name || '').toLowerCase();
+        if (n.includes('business')) {
+          productCategory = 'Small Business Cards';
+        } else if (n.includes('corporate') || n.includes('commercial')) {
+          productCategory = 'Corporate Cards';
+        }
         if (!productsByCategory[productCategory]) {
           productsByCategory[productCategory] = []
         }

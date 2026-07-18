@@ -12,9 +12,10 @@ export const ENABLE_DATA_SOURCE = 'ENABLE_DATA_SOURCE'
 const sortDatasourcesByRank = (datasources) => {
   const rank = {
     'American Express': 1,
-    'CommBank': 2,
-    'NATIONAL AUSTRALIA BANK': 3,
-    'Westpac': 4
+    'ANZ': 2,
+    'CommBank': 3,
+    'NATIONAL AUSTRALIA BANK': 4,
+    'Westpac': 5
   }
   return [...datasources].sort((a, b) => {
     const rankA = rank[a.name] || 999
@@ -81,7 +82,7 @@ export function loadDataSource() {
       })
     }
     ds = sortDatasourcesByRank(ds)
-    const rank = ['American Express', 'CommBank', 'NATIONAL AUSTRALIA BANK', 'Westpac']
+    const rank = ['American Express', 'ANZ', 'CommBank', 'NATIONAL AUSTRALIA BANK', 'Westpac']
     ds.forEach(d => {
       if (rank.includes(d.name)) {
         d.enabled = true
@@ -93,7 +94,7 @@ export function loadDataSource() {
     payload: ds ? Promise.resolve(ds) : fetchDatasources()
       .then(datasources => {
         datasources = sortDatasourcesByRank(datasources)
-        for (let i = 0; i < 4 && i < datasources.length; i++) {
+        for (let i = 0; i < 5 && i < datasources.length; i++) {
           datasources[i].enabled = true
         }
         return datasources

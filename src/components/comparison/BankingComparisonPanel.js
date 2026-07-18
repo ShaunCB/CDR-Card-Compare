@@ -13,7 +13,7 @@ import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import {productDataKeys} from '../../utils/dict'
-import {format} from '../../utils/datetime'
+import {format, parseDurationText} from '../../utils/datetime'
 import AdditionalInfo from '../data/banking/AdditionalInfo'
 import ecomp from '../../utils/enum-comp'
 import Bundle from '../data/banking/Bundle'
@@ -88,7 +88,8 @@ const findAnnualFee = (fees) => {
   // Fallback match: old logic
   return fees.find(f => f && (
     f.feeType === 'PERIODIC' || 
-    (f.name && f.name.toLowerCase().includes('annual'))
+    (f.name && f.name.toLowerCase().includes('annual')) ||
+    (f.name && f.name.toLowerCase().includes('account service'))
   ))
 }
 
@@ -99,12 +100,11 @@ const renderPremiumField = (product, key) => {
       const annualFee = findAnnualFee(product.fees)
       if (annualFee) {
         const feeAmount = getFeeAmount(annualFee)
-        if (annualFee.additionalValue === 'P1M') {
-          return `$${feeAmount} (${annualFee.name || 'Annual Fee'}) - Charged Monthly`
-        } else if (annualFee.additionalValue === 'P1Y') {
-          return `$${feeAmount} (${annualFee.name || 'Annual Fee'}) - Charged Annually`
+        if (annualFee.additionalValue) {
+          const freq = parseDurationText(annualFee.additionalValue);
+          if (freq) return `${feeAmount} (${annualFee.name || 'Annual Fee'}) - Charged every ${freq}`
         }
-        return `$${feeAmount} (${annualFee.name || 'Annual Fee'})`
+        return `${feeAmount} (${annualFee.name || 'Annual Fee'})`
       }
       return 'No Annual Fee'
     }
@@ -128,7 +128,7 @@ const renderPremiumField = (product, key) => {
       if (!product.features) return 'N/A'
       const interestFree = product.features.find(f => f && (f.featureType === 'INTEREST_FREE' || f.featureType === 'INTEREST_FREE_TRANSFERS'))
       if (interestFree) {
-        return interestFree.additionalValue ? `${interestFree.additionalValue}` : (interestFree.additionalInfo || 'Yes')
+        return interestFree.additionalValue ? (parseDurationText(interestFree.additionalValue) || interestFree.additionalValue) : (interestFree.additionalInfo || 'Yes')
       }
       return 'No Interest Free Period'
     }

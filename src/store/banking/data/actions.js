@@ -80,8 +80,8 @@ export const retrieveProductDetail = (dataSourceIdx, url, productId, xV, xMinV) 
   const request = new Request(fullUrl, {
     headers: new Headers({
       ...headers,
-      'x-v': String(7),
-      'x-min-v': String(1),
+      'x-v': String(xV || 7),
+      'x-min-v': String(xMinV || 1),
       'Accept': 'application/json'
     })
   })
