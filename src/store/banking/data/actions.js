@@ -20,7 +20,10 @@ const headers = {
 
 export const retrieveProductList = (dataSourceIdx, baseUrl, productListUrl, xV, xMinV) =>
   (dispatch) => {
-    const request = new Request(productListUrl, {headers: new Headers({...headers, 'x-v': xV, 'x-min-v': xMinV})})
+    const reqHeaders = new Headers(headers)
+    if (xV) reqHeaders.append('x-v', xV)
+    if (xMinV) reqHeaders.append('x-min-v', xMinV)
+    const request = new Request(productListUrl, {headers: reqHeaders})
     dispatch(conoutInfo(`Requesting retrieveProductList() for ${productListUrl}`))
     let responseXV = xV
     const response = dispatch({
@@ -77,13 +80,15 @@ export const retrieveProductList = (dataSourceIdx, baseUrl, productListUrl, xV, 
 export const retrieveProductDetail = (dataSourceIdx, url, productId, xV, xMinV) => (dispatch, getState) => {
   const fullUrl = url + '/banking/products/' + encodeRFC3986URIComponent(productId)
   dispatch(conoutInfo('Requesting retrieveProductDetail() for product ' + productId))
+  const reqHeaders = new Headers({
+    ...headers,
+    'Accept': 'application/json'
+  })
+  if (xV) reqHeaders.append('x-v', String(xV))
+  if (xMinV) reqHeaders.append('x-min-v', String(xMinV))
+
   const request = new Request(fullUrl, {
-    headers: new Headers({
-      ...headers,
-      'x-v': String(xV || 7),
-      'x-min-v': String(xMinV || 1),
-      'Accept': 'application/json'
-    })
+    headers: reqHeaders
   })
   dispatch({
     type: RETRIEVE_PRODUCT_DETAIL,

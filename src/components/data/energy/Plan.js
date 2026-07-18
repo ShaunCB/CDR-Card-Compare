@@ -14,6 +14,7 @@ import FuelType from './FuelType'
 import CustomerType from './CustomerType'
 import ExternalLink from './ExternalLink'
 import Geography from './Geography'
+import { sanitizeUrl } from '../../../utils/url'
 import PlanContract from './PlanContract'
 import MeteringCharge from './MeteringCharge'
 
@@ -109,7 +110,7 @@ const Plan = (props) => {
         <div>Last updated at <DateTime rfc3339={plan.lastUpdated} /> <ExternalLink link={URL.createObjectURL(blob)}>JSON</ExternalLink></div>
         {!!plan.effectiveFrom && <div>Effective from <DateTime rfc3339={plan.effectiveFrom} /></div>}
         {!!plan.effectiveTo && <div>Effective to <DateTime rfc3339={plan.effectiveTo} /></div>}
-        {!!plan.applicationUri && <ExternalLink link={plan.applicationUri}>Apply here</ExternalLink>}
+        {!!plan.applicationUri && !!sanitizeUrl(plan.applicationUri) && <ExternalLink link={sanitizeUrl(plan.applicationUri)}>Apply here</ExternalLink>}
         {
           !!plan.additionalInformation &&
           <div>

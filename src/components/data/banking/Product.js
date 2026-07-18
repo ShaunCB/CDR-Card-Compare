@@ -18,7 +18,7 @@ import {deselectProduct, selectProduct} from '../../../store/banking/selection'
 import DateTime from '../DateTime'
 import AdditionalInfo from './AdditionalInfo'
 import ecomp from '../../../utils/enum-comp'
-import { normalise } from '../../../utils/url'
+import { normalise, sanitizeUrl } from '../../../utils/url'
 import { retrieveProductDetail } from '../../../store/banking/data'
 
 const useStyles = makeStyles(() => ({
@@ -129,7 +129,7 @@ const Product = (props) => {
         <div>{product.isTailored ? 'Tailored' : 'Not Tailored'}</div>
         {!!product.effectiveFrom && <div>Effective from <DateTime rfc3339={product.effectiveFrom}/></div>}
         {!!product.effectiveTo && <div>Effective to <DateTime rfc3339={product.effectiveTo}/></div>}
-        {!!product.applicationUri && <div><a href={product.applicationUri} target='_blank' rel='noopener noreferrer'>Apply here</a></div>}
+        {!!product.applicationUri && !!sanitizeUrl(product.applicationUri) && <div><a href={sanitizeUrl(product.applicationUri)} target='_blank' rel='noopener noreferrer'>Apply here</a></div>}
         {
           !!product.additionalInformation &&
           <div>

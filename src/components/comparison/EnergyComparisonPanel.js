@@ -13,6 +13,7 @@ import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import {format} from '../../utils/datetime'
+import {sanitizeUrl} from '../../utils/url'
 import AdditionalInfo from '../data/energy/AdditionalInfo'
 import Type from '../data/energy/Type'
 import FuelType from '../data/energy/FuelType'
@@ -99,7 +100,7 @@ const EnergyComparisonPanel = (props) => {
       case 'fuelType':
         return <FuelType fuelType={plan[key]} />
       case 'applicationUri':
-        return !!plan[key] && <ExternalLink link={plan[key]}>Apply here</ExternalLink>
+        return !!plan[key] && !!sanitizeUrl(plan[key]) && <ExternalLink link={sanitizeUrl(plan[key])}>Apply here</ExternalLink>
       case 'additionalInformation':
         return !!plan[key] && <AdditionalInfo additionalInfo={plan[key]} tableCell/>
       case 'customerType':

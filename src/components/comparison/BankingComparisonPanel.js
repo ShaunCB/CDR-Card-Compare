@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
+import {sanitizeUrl} from '../../utils/url'
 import Accordion from '@material-ui/core/Accordion'
 import AccordionSummary from '@material-ui/core/AccordionSummary'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
@@ -285,7 +286,7 @@ const render = (product, key) => {
     case 'isTailored':
       return product[key] ? 'Yes' : 'No'
     case 'applicationUri':
-      return !!product[key] && <a href={product[key]} target='_blank' rel='noopener noreferrer'>Apply here</a>
+      return !!product[key] && !!sanitizeUrl(product[key]) && <a href={sanitizeUrl(product[key])} target='_blank' rel='noopener noreferrer'>Apply here</a>
     case 'additionalInformation':
       return !!product[key] && <AdditionalInfo additionalInfo={product[key]} tableCell/>
     case 'bundles':

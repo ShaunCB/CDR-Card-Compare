@@ -13,10 +13,9 @@ const sortDatasourcesByRank = (datasources) => {
   const rank = {
     'American Express': 1,
     'Latitude Group Holdings Limited': 2,
-    'ANZ': 3,
-    'CommBank': 4,
-    'NATIONAL AUSTRALIA BANK': 5,
-    'Westpac': 6
+    'CommBank': 3,
+    'NATIONAL AUSTRALIA BANK': 4,
+    'Westpac': 5
   }
   return [...datasources].sort((a, b) => {
     const rankA = rank[a.name] || 999
@@ -91,7 +90,7 @@ export function loadDataSource() {
       })
     }
     ds = sortDatasourcesByRank(ds)
-    const rank = ['American Express', 'Latitude Group Holdings Limited', 'ANZ', 'CommBank', 'NATIONAL AUSTRALIA BANK', 'Westpac']
+    const rank = ['American Express', 'Latitude Group Holdings Limited', 'CommBank', 'NATIONAL AUSTRALIA BANK', 'Westpac']
     ds.forEach(d => {
       if (rank.includes(d.name)) {
         d.enabled = true

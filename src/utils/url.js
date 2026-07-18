@@ -32,3 +32,9 @@ export function encodeRFC3986URIComponent(str) {
     (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`,
   )
 }
+
+export function sanitizeUrl(url) {
+  if (typeof url !== 'string') return url;
+  if (/^(javascript|vbscript|data):/i.test(url.trim())) return null;
+  return url;
+}
