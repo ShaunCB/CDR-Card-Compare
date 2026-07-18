@@ -99,6 +99,11 @@ const renderPremiumField = (product, key) => {
       const annualFee = findAnnualFee(product.fees)
       if (annualFee) {
         const feeAmount = getFeeAmount(annualFee)
+        if (annualFee.additionalValue === 'P1M') {
+          return `$${feeAmount} (${annualFee.name || 'Annual Fee'}) - Charged Monthly`
+        } else if (annualFee.additionalValue === 'P1Y') {
+          return `$${feeAmount} (${annualFee.name || 'Annual Fee'}) - Charged Annually`
+        }
         return `$${feeAmount} (${annualFee.name || 'Annual Fee'})`
       }
       return 'No Annual Fee'
@@ -142,7 +147,11 @@ const renderPremiumField = (product, key) => {
 
 const renderCardBadges = (product) => {
   const badges = []
-  if (product.name && (product.name.toLowerCase().includes('charge') || (product.description && product.description.toLowerCase().includes('charge')))) {
+  const hasChargeArt = product.cardArt && product.cardArt.some(art => art && art.title && art.title.toLowerCase().includes('charge'))
+  const isCharge = (product.name && product.name.toLowerCase().includes('charge')) || 
+                   (product.description && product.description.toLowerCase().includes('charge')) || 
+                   hasChargeArt;
+  if (isCharge) {
     badges.push({ text: 'Charge Card', color: '#1890ff', bg: '#e6f7ff' })
   } else {
     badges.push({ text: 'Credit Card', color: '#722ed1', bg: '#f9f0ff' })
@@ -361,7 +370,7 @@ const ComparisonPanel = (props) => {
           </TableHead>
           <TableBody>
             {premiumDataKeys.concat(productDataKeys).map(dataKey => (
-              <TableRow key={dataKey.key}>
+              <TableRow key={dataKey.key} hover>
                 <TableCell component='th' scope='row' align='right' className={classes.dataCell} width='16%' style={{ fontWeight: 'bold' }}>
                   {dataKey.label}
                 </TableCell>

@@ -125,6 +125,7 @@ export const retrieveProductDetail = (dataSourceIdx, url, productId, xV, xMinV) 
               applicationUri: summaryProduct.applicationUri,
               isTailored: summaryProduct.isTailored,
               additionalInformation: summaryProduct.additionalInformation,
+              cardArt: summaryProduct.cardArt,
               // Map stub data with helpful fallback messages
               features: [{ featureType: 'OTHER', additionalInfo: 'See Provider Website' }],
               fees: [{ name: 'Details Unavailable (CORS/Preflight Mismatch)', feeType: 'EVENT', additionalInfo: 'See Provider Website' }],
