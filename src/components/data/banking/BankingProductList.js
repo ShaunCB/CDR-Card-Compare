@@ -36,11 +36,12 @@ class BankingProductList extends React.Component {
       )
       filteredProducts.forEach(product => {
         let productCategory = "Consumer Credit Cards";
-        const n = (product.name || '').toLowerCase();
-        if (n.includes('business')) {
-          productCategory = 'Small Business Cards';
-        } else if (n.includes('corporate') || n.includes('commercial')) {
+        if (product.productCategory === 'BUSINESS_CARDS') {
+          productCategory = 'Business Cards';
+        } else if (product.productCategory === 'CORPORATE_CARDS') {
           productCategory = 'Corporate Cards';
+        } else if (product.productCategory === 'CRED_AND_CHRG_CARDS') {
+          productCategory = 'Consumer Credit Cards';
         }
         if (!productsByCategory[productCategory]) {
           productsByCategory[productCategory] = []

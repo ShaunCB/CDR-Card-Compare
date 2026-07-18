@@ -12,10 +12,11 @@ export const ENABLE_DATA_SOURCE = 'ENABLE_DATA_SOURCE'
 const sortDatasourcesByRank = (datasources) => {
   const rank = {
     'American Express': 1,
-    'ANZ': 2,
-    'CommBank': 3,
-    'NATIONAL AUSTRALIA BANK': 4,
-    'Westpac': 5
+    'Latitude Group Holdings Limited': 2,
+    'ANZ': 3,
+    'CommBank': 4,
+    'NATIONAL AUSTRALIA BANK': 5,
+    'Westpac': 6
   }
   return [...datasources].sort((a, b) => {
     const rankA = rank[a.name] || 999
@@ -73,6 +74,14 @@ function loadLocalDatasources() {
 export function loadDataSource() {
   let ds = loadLocalDatasources()
   if (ds) {
+    if (!ds.some(d => d.name === 'Latitude Group Holdings Limited')) {
+      ds.push({
+        name: 'Latitude Group Holdings Limited',
+        url: 'https://public.cdr.latitudefinancial.com.au/cds-au/v1',
+        icon: '',
+        sectors: ['banking']
+      })
+    }
     if (!ds.some(d => d.name === 'American Express')) {
       ds.push({
         name: 'American Express',
@@ -82,7 +91,7 @@ export function loadDataSource() {
       })
     }
     ds = sortDatasourcesByRank(ds)
-    const rank = ['American Express', 'ANZ', 'CommBank', 'NATIONAL AUSTRALIA BANK', 'Westpac']
+    const rank = ['American Express', 'Latitude Group Holdings Limited', 'ANZ', 'CommBank', 'NATIONAL AUSTRALIA BANK', 'Westpac']
     ds.forEach(d => {
       if (rank.includes(d.name)) {
         d.enabled = true

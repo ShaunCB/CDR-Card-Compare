@@ -55,7 +55,7 @@ export const retrieveProductList = (dataSourceIdx, baseUrl, productListUrl, xV, 
         })
         .then(json => {
           if (json && json.data && json.data.products) {
-            json.data.products = json.data.products.filter(p => p.productCategory === 'CRED_AND_CHRG_CARDS')
+            json.data.products = json.data.products.filter(p => ['CRED_AND_CHRG_CARDS', 'BUSINESS_CARDS', 'CORPORATE_CARDS'].includes(p.productCategory))
             json.meta = { ...json.meta, totalRecords: json.data.products.length }
           }
           return {idx: dataSourceIdx, response: json, responseXV: responseXV || '5'}
