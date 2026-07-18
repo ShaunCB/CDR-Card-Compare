@@ -410,3 +410,4 @@ const mapStateToProps = state => {
 const mapDispatchToProps = { deselectProduct }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ComparisonPanel)
+
