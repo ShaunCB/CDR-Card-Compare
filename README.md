@@ -1,16 +1,16 @@
 # OpenCard AU (Community Fork)
 
 > **LEGAL DISCLAIMER & NOTICE OF INTENT**
-> OpenCard AU is an independent, open-source **technical demonstration and developer preview tool** designed solely to showcase the data-sharing capabilities of Australia’s Consumer Data Right (CDR) framework. It is a community-driven fork of the original CDSA demo. 
+> OpenCard AU is an independent, open-source **technical demonstration and developer preview tool** designed solely to showcase the data-sharing capabilities of Australia’s Consumer Data Right (CDR) framework. It is a community-driven fork of the [original Data Standards Body (DSB) Product Comparator demo](https://github.com/ConsumerDataStandardsAustralia/product-comparator-demo). 
 > 
-> This project is maintained independently and is **not** a financial service, does **not** provide financial advice, does **not** hold an Australian Financial Services Licence (AFSL), and is **not** affiliated with, endorsed by, or associated with the CDSA, the ACCC, or the Australian Government. Use entirely at your own risk.
+> This project is maintained independently and is **not** a financial service, does **not** provide financial advice, does **not** hold an Australian Financial Services Licence (AFSL), and is **not** affiliated with, endorsed by, or associated with the DSB, the ACCC, the Treasury, or the Australian Government. Use entirely at your own risk.
 
 ## Overview
 OpenCard AU is a developer-focused technical showcase designed to demonstrate how public, unauthenticated **Product Reference Data (PRD)** APIs operate under the Australian Open Banking framework. 
 
 By targeting the standardized endpoints of registered Data Holders, this application illustrates how disparate, raw JSON payloads can be aggregated, normalized, and visualized within a unified interface. 
 
-Because the original government demonstration repository is currently experiencing API schema compatibility issues, this project serves as a functional, patched alternative for developers, researchers, and technical architects exploring CDR implementations.
+While the DSB offers their own official live demo of the Product Comparator, the original government repository is currently experiencing API schema compatibility issues. Therefore, this independent project serves as a functional, patched alternative for developers, researchers, and technical architects exploring CDR implementations.
 
 ### Technical Enhancements in this Version
 *   **Focused API Scope:** Streamlined the data parsing pipelines to focus exclusively on Credit and Charge Card PRD schemas.
