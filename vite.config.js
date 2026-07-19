@@ -2,22 +2,11 @@ import { defineConfig, transformWithEsbuild } from 'vite'
 import react from '@vitejs/plugin-react'
 import pkg from './package.json'
 
-// Extract homepage path if available
-let homepagePath = '/OpenCard-AU/'
-if (pkg.homepage) {
-  try {
-    const url = new URL(pkg.homepage)
-    homepagePath = url.pathname
-  } catch (e) {
-    homepagePath = pkg.homepage
-  }
-}
 
-const publicUrl = process.env.PUBLIC_URL || homepagePath
-const base = publicUrl.endsWith('/') ? publicUrl : `${publicUrl}/`
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/OpenCard-AU/',
   plugins: [
     {
       name: 'treat-js-files-as-jsx',
@@ -33,7 +22,6 @@ export default defineConfig({
     },
     react(),
   ],
-  base: base,
   server: {
     port: parseInt(process.env.PORT) || 3001,
   },
