@@ -1,3 +1,4 @@
+import { sanitizeUrl } from '../../../utils/url';
 import React from 'react'
 import {makeStyles} from '@material-ui/core'
 import AdditionalInformationUris from './AdditionalInformationUris'
@@ -22,11 +23,11 @@ const AdditionalInfo = (props) => {
   const classes = useStyles()
   return (
     <ul className={!!tableCell ? classes.tableCell : classes.ul}>
-      {!!overviewUri && <li><a href={overviewUri} target='_blank' rel='noopener noreferrer'>Overview</a></li>}
-      {!!termsUri && <li><a href={termsUri} target='_blank' rel='noopener noreferrer'>Terms</a></li>}
-      {!!eligibilityUri && <li><a href={eligibilityUri} target='_blank' rel='noopener noreferrer'>Eligibility</a></li>}
-      {!!feesAndPricingUri && <li><a href={feesAndPricingUri} target='_blank' rel='noopener noreferrer'>Fee and Pricing</a></li>}
-      {!!bundleUri && <li><a href={bundleUri} target='_blank' rel='noopener noreferrer'>Bundle</a></li>}
+      {!!overviewUri && <li><a href={sanitizeUrl(overviewUri)} target='_blank' rel='noopener noreferrer'>Overview</a></li>}
+      {!!termsUri && <li><a href={sanitizeUrl(termsUri)} target='_blank' rel='noopener noreferrer'>Terms</a></li>}
+      {!!eligibilityUri && <li><a href={sanitizeUrl(eligibilityUri)} target='_blank' rel='noopener noreferrer'>Eligibility</a></li>}
+      {!!feesAndPricingUri && <li><a href={sanitizeUrl(feesAndPricingUri)} target='_blank' rel='noopener noreferrer'>Fee and Pricing</a></li>}
+      {!!bundleUri && <li><a href={sanitizeUrl(bundleUri)} target='_blank' rel='noopener noreferrer'>Bundle</a></li>}
       {!!additionalOverviewUris && <AdditionalInformationUris title="Additional Overview URIs" uris={additionalOverviewUris} />}
       {!!additionalTermsUris && <AdditionalInformationUris title="Additional Terms and Conditions URIs" uris={additionalTermsUris} />}
       {!!additionalEligibilityUris && <AdditionalInformationUris title="Additional Eligibility Rules and Criteria URIs" uris={additionalEligibilityUris} />}

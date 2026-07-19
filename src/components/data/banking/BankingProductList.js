@@ -35,19 +35,46 @@ class BankingProductList extends React.Component {
         product.name && product.name.toLowerCase().includes(searchQuery.toLowerCase())
       )
       filteredProducts.forEach(product => {
-        let productCategory = "Consumer Credit Cards";
-        if (product.productCategory === 'BUSINESS_CARDS') {
-          productCategory = 'Business Cards';
-        } else if (product.productCategory === 'CORPORATE_CARDS') {
-          productCategory = 'Corporate Cards';
-        } else if (product.productCategory === 'CRED_AND_CHRG_CARDS') {
-          productCategory = 'Consumer Credit Cards';
+        const detail = productDetails && productDetails.find(d => d.productId === product.productId)
+        const fullProduct = detail || product
+        
+        let productCategory = 'Consumer Cards';
+        
+        const origCat = fullProduct.productCategory || '';
+        const nameText = (fullProduct.name || '').toLowerCase();
+        const descText = (fullProduct.description || '').toLowerCase();
+        
+        let isBusiness = origCat === 'BUSINESS_CARDS';
+        let isCorporate = origCat === 'CORPORATE_CARDS';
+        
+        if (nameText.includes('corporate') || descText.includes('corporate') || nameText.includes('commercial') || descText.includes('commercial') || nameText.includes('vpayment')) {
+          isCorporate = true;
+        } else if (nameText.includes('business') || descText.includes('business')) {
+          isBusiness = true;
         }
+        
+        if (fullProduct.eligibility && Array.isArray(fullProduct.eligibility)) {
+          fullProduct.eligibility.forEach(elig => {
+            const eligType = (elig.eligibilityType || '').toLowerCase();
+            const eligInfo = (elig.additionalInfo || '').toLowerCase();
+            const eligValue = (elig.additionalValue || '').toLowerCase();
+            if (eligType.includes('business') || eligInfo.includes('business') || eligValue.includes('business')) isBusiness = true;
+            if (eligType.includes('corporate') || eligInfo.includes('corporate') || eligValue.includes('corporate') || eligType.includes('commercial') || eligInfo.includes('commercial') || eligValue.includes('commercial')) isCorporate = true;
+          });
+        }
+        
+        if (isCorporate) {
+          productCategory = 'Corporate Cards';
+        } else if (isBusiness) {
+          productCategory = 'Business Cards';
+        } else if (origCat !== 'CRED_AND_CHRG_CARDS' && origCat !== 'BUSINESS_CARDS' && origCat !== 'CORPORATE_CARDS' && origCat !== '') {
+          productCategory = origCat.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+        }
+
         if (!productsByCategory[productCategory]) {
           productsByCategory[productCategory] = []
         }
-        const detail = productDetails && productDetails.find(d => d.productId === product.productId)
-        productsByCategory[productCategory].push(detail || product)
+        productsByCategory[productCategory].push(fullProduct)
       })
     }
 
@@ -83,9 +110,15 @@ class BankingProductList extends React.Component {
           }
           {
             !loading && !!products &&
-            Object.keys(productsByCategory).sort().map((category, index) => (
-              <ProductCategory key={index} category={category} products={productsByCategory[category]} dataSourceIndex={dataSourceIndex}/>
-            ))
+            (() => {
+              const keys = Object.keys(productsByCategory);
+              const targetOrder = ['Consumer Cards', 'Business Cards', 'Corporate Cards'];
+              const others = keys.filter(k => !targetOrder.includes(k)).sort();
+              const orderedKeys = [...targetOrder, ...others].filter(k => keys.includes(k));
+              return orderedKeys.map((category, index) => (
+                <ProductCategory key={index} category={category} products={productsByCategory[category]} dataSourceIndex={dataSourceIndex}/>
+              ));
+            })()
           }
         </div>
       </div>

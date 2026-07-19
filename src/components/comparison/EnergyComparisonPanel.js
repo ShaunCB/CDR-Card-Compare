@@ -100,7 +100,7 @@ const EnergyComparisonPanel = (props) => {
       case 'fuelType':
         return <FuelType fuelType={plan[key]} />
       case 'applicationUri':
-        return !!plan[key] && !!sanitizeUrl(plan[key]) && <ExternalLink link={sanitizeUrl(plan[key])}>Apply here</ExternalLink>
+        return !!plan[key] && !!sanitizeUrl(plan[key]) && <ExternalLink link={sanitizeUrl(plan[key])}>View Issuer Website</ExternalLink>
       case 'additionalInformation':
         return !!plan[key] && <AdditionalInfo additionalInfo={plan[key]} tableCell/>
       case 'customerType':

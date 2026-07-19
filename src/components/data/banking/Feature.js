@@ -1,3 +1,4 @@
+import { sanitizeUrl } from '../../../utils/url';
 import React from 'react'
 import {translateFeatureType} from '../../../utils/dict'
 import Duration from '../Duration'
@@ -60,7 +61,7 @@ const Feature = (props) => {
           <span> - ${additionalValue}</span>
         }
       </div>
-      {!!additionalInfoUri && <div><a href={additionalInfoUri} target='_blank' rel='noopener noreferrer'>More info</a></div>}
+      {!!additionalInfoUri && <div><a href={sanitizeUrl(additionalInfoUri)} target='_blank' rel='noopener noreferrer'>More info</a></div>}
     </li>
   )
 }

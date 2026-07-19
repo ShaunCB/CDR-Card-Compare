@@ -110,7 +110,7 @@ const Plan = (props) => {
         <div>Last updated at <DateTime rfc3339={plan.lastUpdated} /> <ExternalLink link={URL.createObjectURL(blob)}>JSON</ExternalLink></div>
         {!!plan.effectiveFrom && <div>Effective from <DateTime rfc3339={plan.effectiveFrom} /></div>}
         {!!plan.effectiveTo && <div>Effective to <DateTime rfc3339={plan.effectiveTo} /></div>}
-        {!!plan.applicationUri && !!sanitizeUrl(plan.applicationUri) && <ExternalLink link={sanitizeUrl(plan.applicationUri)}>Apply here</ExternalLink>}
+        {!!plan.applicationUri && !!sanitizeUrl(plan.applicationUri) && <ExternalLink link={sanitizeUrl(plan.applicationUri)}>View Issuer Website</ExternalLink>}
         {
           !!plan.additionalInformation &&
           <div>

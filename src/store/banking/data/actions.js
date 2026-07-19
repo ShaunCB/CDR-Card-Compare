@@ -9,6 +9,17 @@ export const RETRIEVE_ALL_PRODUCT_DETAILS = 'RETRIEVE_ALL_PRODUCT_DETAILS'
 export const DELETE_DATA = 'DELETE_DATA'
 export const CLEAR_DATA = 'CLEAR_DATA'
 
+import DOMPurify from 'dompurify'
+
+const sanitizeProductData = (data) => {
+  if (!data) return data;
+  if (data.name) data.name = DOMPurify.sanitize(data.name);
+  if (data.description) data.description = DOMPurify.sanitize(data.description);
+  if (data.brand) data.brand = DOMPurify.sanitize(data.brand);
+  if (data.brandName) data.brandName = DOMPurify.sanitize(data.brandName);
+  return data;
+};
+
 export const startRetrieveProductList = (dataSourceIdx) => ({
   type: START_RETRIEVE_PRODUCT_LIST,
   payload: {idx: dataSourceIdx}
@@ -80,15 +91,13 @@ export const retrieveProductList = (dataSourceIdx, baseUrl, productListUrl, xV, 
 export const retrieveProductDetail = (dataSourceIdx, url, productId, xV, xMinV) => (dispatch, getState) => {
   const fullUrl = url + '/banking/products/' + encodeRFC3986URIComponent(productId)
   dispatch(conoutInfo('Requesting retrieveProductDetail() for product ' + productId))
-  const reqHeaders = new Headers({
-    ...headers,
-    'Accept': 'application/json'
-  })
-  if (xV) reqHeaders.append('x-v', String(xV))
-  if (xMinV) reqHeaders.append('x-min-v', String(xMinV))
-
   const request = new Request(fullUrl, {
-    headers: reqHeaders
+    headers: new Headers({
+      ...headers,
+      'x-v': String(7),
+      'x-min-v': String(1),
+      'Accept': 'application/json'
+    })
   })
   dispatch({
     type: RETRIEVE_PRODUCT_DETAIL,
@@ -104,6 +113,9 @@ export const retrieveProductDetail = (dataSourceIdx, url, productId, xV, xMinV) 
         return obj
       })
       .then(json => {
+        if (json && json.data) {
+          json.data = sanitizeProductData(json.data);
+        }
         const { productDetails } = getState().banking[dataSourceIdx]
         const { data } = json
         if (productDetails.some(prod => prod.productId === data.productId

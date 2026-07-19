@@ -10,21 +10,7 @@ export const MODIFY_DATA_SOURCE_ICON = 'MODIFY_DATA_SOURCE_ICON'
 export const ENABLE_DATA_SOURCE = 'ENABLE_DATA_SOURCE'
 
 const sortDatasourcesByRank = (datasources) => {
-  const rank = {
-    'American Express': 1,
-    'Latitude Group Holdings Limited': 2,
-    'CommBank': 3,
-    'NATIONAL AUSTRALIA BANK': 4,
-    'Westpac': 5
-  }
-  return [...datasources].sort((a, b) => {
-    const rankA = rank[a.name] || 999
-    const rankB = rank[b.name] || 999
-    if (rankA !== rankB) {
-      return rankA - rankB
-    }
-    return a.name.localeCompare(b.name)
-  })
+  return [...datasources].sort((a, b) => a.name.localeCompare(b.name))
 }
 
 const MAJOR_NAMES = {'ANZ': [], 'CommBank': ['CBA', 'Commonwealth Bank'], 'NATIONAL AUSTRALIA BANK': ['NAB', 'National'], 'Westpac': []}
@@ -72,25 +58,31 @@ function loadLocalDatasources() {
 
 export function loadDataSource() {
   let ds = loadLocalDatasources()
-  if (ds) {
-    if (!ds.some(d => d.name === 'Latitude Group Holdings Limited')) {
-      ds.push({
-        name: 'Latitude Group Holdings Limited',
-        url: 'https://public.cdr.latitudefinancial.com.au/cds-au/v1',
-        icon: '',
-        sectors: ['banking']
+
+  const ensureCustomBrands = (array) => {
+    if (!array.some(d => d.name === 'Latitude Credit Cards')) {
+      array.push({
+        name: 'Latitude Credit Cards',
+        url: 'https://api.productcloud.com.au/public/LATITUDECARDS',
+        icon: 'https://images.ctfassets.net/w0q68lqdeo57/yXPxCYiHJucDHSI6nTDNX/7656c648c094e8bfff54ef7a2b5f9dea/Latitude_primary-logo_indigo_RGB.png',
+        sectors: ['non-bank-lending']
       })
     }
-    if (!ds.some(d => d.name === 'American Express')) {
-      ds.push({
+    if (!array.some(d => d.name === 'American Express')) {
+      array.push({
         name: 'American Express',
         url: 'https://apigw.americanexpress.com/cdr/unauth/cds-au/v1',
         icon: 'https://www.aexp-static.com/cdaas/one/statics/axp-static-assets/1.8.0/package/dist/img/logos/dls-logo-bluebox-solid.svg',
         sectors: ['banking']
       })
     }
+    return array
+  }
+
+  if (ds) {
+    ds = ensureCustomBrands(ds)
     ds = sortDatasourcesByRank(ds)
-    const rank = ['American Express', 'Latitude Group Holdings Limited', 'CommBank', 'NATIONAL AUSTRALIA BANK', 'Westpac']
+    const rank = ['American Express', 'Latitude Credit Cards', 'CommBank', 'NATIONAL AUSTRALIA BANK', 'Westpac']
     ds.forEach(d => {
       if (rank.includes(d.name)) {
         d.enabled = true
@@ -101,10 +93,14 @@ export function loadDataSource() {
     type: LOAD_DATA_SOURCE,
     payload: ds ? Promise.resolve(ds) : fetchDatasources()
       .then(datasources => {
+        datasources = ensureCustomBrands(datasources)
         datasources = sortDatasourcesByRank(datasources)
-        for (let i = 0; i < 5 && i < datasources.length; i++) {
-          datasources[i].enabled = true
-        }
+        const defaultBrands = ['American Express', 'Latitude Credit Cards', 'CommBank', 'NATIONAL AUSTRALIA BANK', 'Westpac']
+        datasources.forEach(d => {
+          if (defaultBrands.includes(d.name)) {
+            d.enabled = true
+          }
+        })
         return datasources
       })
   }

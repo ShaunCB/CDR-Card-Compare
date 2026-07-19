@@ -1,3 +1,4 @@
+import { sanitizeUrl } from '../../../utils/url';
 import React from 'react'
 import DiscountEligibility from './DiscountEligibility'
 import {makeStyles} from '@material-ui/core'
@@ -54,7 +55,7 @@ const FeeDiscount = (props) => {
       <div>{description}</div>
       {discountType === 'ELIGIBILITY_ONLY' && additionalValue && <div>{additionalValue}</div>}
       {!!additionalInfo && <div>{additionalInfo}</div>}
-      {!!additionalInfoUri && <div><a href={additionalInfoUri} target='_blank' rel='noopener noreferrer'>More info</a></div>}
+      {!!additionalInfoUri && <div><a href={sanitizeUrl(additionalInfoUri)} target='_blank' rel='noopener noreferrer'>More info</a></div>}
       {
         !!eligibility && eligibility.length > 0 &&
         <div>

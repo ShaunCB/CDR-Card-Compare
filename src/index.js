@@ -5,6 +5,7 @@ import Page from './components/Page'
 import { Provider as StoreProvider } from 'react-redux'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import store from './store'
+import SpeedBump from './components/SpeedBump'
 
 const theme = createMuiTheme({
   palette: {
@@ -40,6 +41,7 @@ const theme = createMuiTheme({
 const App = () => {
   return <StoreProvider store={store}>
     <MuiThemeProvider theme={theme}>
+      <SpeedBump />
       <Page />
     </MuiThemeProvider>
   </StoreProvider>

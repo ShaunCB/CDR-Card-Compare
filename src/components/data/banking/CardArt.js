@@ -1,3 +1,4 @@
+import { sanitizeUrl } from '../../../utils/url';
 import React from 'react'
 import {makeStyles} from '@material-ui/core'
 
@@ -61,7 +62,7 @@ function CardArt(props) {
     <li>
       {!!cardArt.title && <div>{cardArt.title}</div>}
       <div>
-        <a className={classes.cardArt} href={imageUri} target="_blank" rel="noopener noreferrer">
+        <a className={classes.cardArt} href={sanitizeUrl(imageUri)} target="_blank" rel="noopener noreferrer">
           <img src={imageUri} alt=""/>
           <span>{imageUri}</span>
         </a>

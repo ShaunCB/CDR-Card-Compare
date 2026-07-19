@@ -1,3 +1,4 @@
+import { sanitizeUrl } from '../../../utils/url';
 import React from 'react'
 import {translateEligibilityType} from '../../../utils/dict'
 
@@ -41,7 +42,7 @@ const Eligibility = (props) => {
             {!!additionalInfo && <div>Info: {additionalInfo}</div>}
             {!!additionalInfoUri && (
               <div>
-                <a href={additionalInfoUri} target='_blank' rel='noopener noreferrer' style={{ color: '#2563eb', textDecoration: 'none' }}>
+                <a href={sanitizeUrl(additionalInfoUri)} target='_blank' rel='noopener noreferrer' style={{ color: '#2563eb', textDecoration: 'none' }}>
                   Read official guidelines
                 </a>
               </div>

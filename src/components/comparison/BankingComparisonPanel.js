@@ -79,15 +79,24 @@ const getFeeAmount = (fee) => {
 
 const findAnnualFee = (fees) => {
   if (!fees) return null
+  
+  const isSecondary = (f) => {
+    if (!f) return true
+    const name = (f.name || '').toLowerCase()
+    return name.includes('additional') || name.includes('supplementary')
+  }
+
+  const primaryFees = fees.filter(f => !isSecondary(f))
+
   // Strict match: name is exactly "Annual Fee" or type is exactly "Annual Fee" (case-insensitive)
-  const strictFee = fees.find(f => f && (
+  const strictFee = primaryFees.find(f => f && (
     (f.name && f.name.toLowerCase().trim() === 'annual fee') ||
     (f.feeType && f.feeType.toLowerCase().trim() === 'annual fee')
   ))
   if (strictFee) return strictFee
 
   // Fallback match: old logic
-  return fees.find(f => f && (
+  return primaryFees.find(f => f && (
     f.feeType === 'PERIODIC' || 
     (f.name && f.name.toLowerCase().includes('annual')) ||
     (f.name && f.name.toLowerCase().includes('account service'))
@@ -100,12 +109,17 @@ const renderPremiumField = (product, key) => {
       if (!product.fees) return 'N/A'
       const annualFee = findAnnualFee(product.fees)
       if (annualFee) {
-        const feeAmount = getFeeAmount(annualFee)
+        const feeAmount = Number(getFeeAmount(annualFee)).toFixed(2);
+        
+        // Safely determine the fee name, replacing exactly "(Annual Fee)" with an empty string
+        let feeName = `(${annualFee.name || 'Annual Fee'})`.replace(/\(Annual Fee\)/gi, '').trim();
+        feeName = feeName ? ` ${feeName}` : ''; // Add a leading space only if there's a remaining name
+
         if (annualFee.additionalValue) {
           const freq = parseDurationText(annualFee.additionalValue);
-          if (freq) return `${feeAmount} (${annualFee.name || 'Annual Fee'}) - Charged every ${freq}`
+          if (freq) return `$${feeAmount}${feeName} - Charged every ${freq}`;
         }
-        return `${feeAmount} (${annualFee.name || 'Annual Fee'})`
+        return `$${feeAmount}${feeName}`;
       }
       return 'No Annual Fee'
     }
@@ -214,18 +228,19 @@ const resolveImageUri = (imageUri, dataSource) => {
   return resolved
 }
 
-const renderCardImage = (product, dataSource) => {
+const CardImage = ({ product, dataSource }) => {
+  const [imgError, setImgError] = React.useState(false)
   const cardArtObj = product.cardArt && product.cardArt.find(art => art && art.imageUri)
   const imageUri = cardArtObj ? resolveImageUri(cardArtObj.imageUri, dataSource) : null
   
-  if (imageUri) {
+  if (imageUri && !imgError) {
     return (
       <div style={{ margin: '8px 0', width: '120px', height: '76px', borderRadius: '6px', overflow: 'hidden', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
         <img 
           src={imageUri} 
           alt={product.name} 
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-          onError={(e) => { e.target.style.display = 'none' }}
+          onError={() => setImgError(true)}
         />
       </div>
     )
@@ -271,6 +286,7 @@ const renderCardImage = (product, dataSource) => {
   )
 }
 
+
 const render = (product, key) => {
   const premium = renderPremiumField(product, key)
   if (premium !== null) return premium
@@ -286,7 +302,7 @@ const render = (product, key) => {
     case 'isTailored':
       return product[key] ? 'Yes' : 'No'
     case 'applicationUri':
-      return !!product[key] && !!sanitizeUrl(product[key]) && <a href={sanitizeUrl(product[key])} target='_blank' rel='noopener noreferrer'>Apply here</a>
+      return !!product[key] && !!sanitizeUrl(product[key]) && <a href={sanitizeUrl(product[key])} target='_blank' rel='noopener noreferrer'>View Issuer Website</a>
     case 'additionalInformation':
       return !!product[key] && <AdditionalInfo additionalInfo={product[key]} tableCell/>
     case 'bundles':
@@ -358,7 +374,7 @@ const ComparisonPanel = (props) => {
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
                       <span style={{ fontWeight: 'bold' }}>{dataSources[productData.dataSourceIdx].name}</span>
-                      {renderCardImage(productData.product, dataSources[productData.dataSourceIdx])}
+                      <CardImage product={productData.product} dataSource={dataSources[productData.dataSourceIdx]} />
                       <span style={{ fontSize: '0.85rem', color: '#555' }}>{productData.product.name}</span>
                       {renderCardBadges(productData.product)}
                     </div>

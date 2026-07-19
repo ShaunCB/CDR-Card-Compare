@@ -47,6 +47,12 @@ function Page() {
       <div style={{ marginTop: 16, marginBottom: 24 }}>
         <ConsolePanel/>
       </div>
+      
+      {/* Global Footer (Mandatory positioning) */}
+      <div style={{ textAlign: 'center', color: '#64748b', fontSize: '0.9rem', padding: '32px 0' }}>
+        A Technical Showcase of CDR Product Data.<br/>
+        <span style={{ fontSize: '0.8rem' }}>This tool provides general information only and does not constitute financial advice.</span>
+      </div>
     </Container>
   );
 }

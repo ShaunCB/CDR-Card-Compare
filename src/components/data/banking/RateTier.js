@@ -1,3 +1,4 @@
+import { sanitizeUrl } from '../../../utils/url';
 import React from 'react'
 import RateCondition from './RateCondition'
 import RateSubTier from './RateSubTier'
@@ -34,7 +35,7 @@ const RateTier = (props) => {
         </div>
       }
       {!!additionalInfo && <div>{additionalInfo}</div>}
-      {!!additionalInfoUri && <div><a href={additionalInfoUri} target='_blank' rel='noopener noreferrer'>More info</a></div>}
+      {!!additionalInfoUri && <div><a href={sanitizeUrl(additionalInfoUri)} target='_blank' rel='noopener noreferrer'>More info</a></div>}
     </li>
   )
 }

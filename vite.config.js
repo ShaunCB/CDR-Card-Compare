@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 import pkg from './package.json'
 
 // Extract homepage path if available
-let homepagePath = '/CDR-Card-Compare/'
+let homepagePath = '/OpenCard-AU/'
 if (pkg.homepage) {
   try {
     const url = new URL(pkg.homepage)

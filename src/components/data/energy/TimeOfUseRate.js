@@ -1,3 +1,4 @@
+import { sanitizeUrl } from '../../../utils/url';
 import React from 'react'
 import { makeStyles } from '@material-ui/core'
 import Rate from './Rate'
@@ -50,7 +51,7 @@ const TimeOfUseRate = ({timeOfUseRate}) => {
               <div>Additional Info: <span>{additionalInfo}</span></div>
             )}
             {additionalInfoUri && (
-              <div><a href={additionalInfoUri} target='_blank' rel='noopener noreferrer'>More info</a></div>
+              <div><a href={sanitizeUrl(additionalInfoUri)} target='_blank' rel='noopener noreferrer'>More info</a></div>
             )}
           </li>
         ))}

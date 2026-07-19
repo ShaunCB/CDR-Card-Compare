@@ -1662,5 +1662,13 @@
     "sectors": [
       "banking"
     ]
+  },
+  {
+    "name": "Latitude Group Holdings Limited",
+    "url": "https://public.cdr.latitudefinancial.com.au/cds-au/v1",
+    "icon": "",
+    "sectors": [
+      "banking"
+    ]
   }
 ]

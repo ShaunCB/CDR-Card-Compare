@@ -1,3 +1,4 @@
+import { sanitizeUrl } from '../../../utils/url';
 import React from 'react'
 import RateTier from './RateTier'
 import Duration from '../Duration'
@@ -57,7 +58,7 @@ const DepositRate = (props) => {
           </div>
       }
       {!!additionalInfo && <div>{additionalInfo}</div>}
-      {!!additionalInfoUri && <div><a href={additionalInfoUri} target='_blank' rel='noopener noreferrer'>More info</a></div>}
+      {!!additionalInfoUri && <div><a href={sanitizeUrl(additionalInfoUri)} target='_blank' rel='noopener noreferrer'>More info</a></div>}
     </li>
   )
 }

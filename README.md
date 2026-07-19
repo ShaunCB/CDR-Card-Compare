@@ -28,3 +28,10 @@ Before you begin, ensure you have the following installed on your local machine:
 *   **Git** (for cloning the repository)
 *   **Node.js (v18.0.0 or higher)** (Recommended: **v20 LTS** or **v22 LTS** to ensure seamless Vite compiler compatibility)
 *   **npm** (included with Node.js) or **Yarn**
+
+### Installation
+Clone this repository to your local machine by running the following command in your terminal:
+
+```bash
+git clone https://github.com/ShaunCB/OpenCard-AU.git
+```
