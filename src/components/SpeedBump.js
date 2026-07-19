@@ -20,7 +20,7 @@ export default function SpeedBump() {
         <p style={{ color: '#334155', lineHeight: '1.6' }}>
           <strong>OpenCard AU is a strictly open-source technical demonstration.</strong><br/><br/>
           It uses unauthenticated public CDR APIs provided "As Is". 
-          It is <strong>not</strong> a financial service, is <strong>not</strong> affiliated with the CDSA, ACCC, or any Government entity, and provides <strong>no financial advice</strong>.
+          It is <strong>not</strong> a financial service, is <strong>not</strong> affiliated with the DSB, ACCC, the Treasury, or any Government entity, and provides <strong>no financial advice</strong>.
         </p>
         <button 
           onClick={() => setAccepted(true)}
