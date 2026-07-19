@@ -10,9 +10,9 @@ OpenCard AU is a developer-focused technical showcase designed to demonstrate ho
 
 By targeting the standardized endpoints of registered Data Holders, this application illustrates how disparate, raw JSON payloads can be aggregated, normalized, and visualized within a unified interface. 
 
-Because the original government demonstration repository is currently experiencing API schema compatibility issues, this fork serves as a functional, patched alternative for developers, researchers, and technical architects exploring CDR implementations.
+Because the original government demonstration repository is currently experiencing API schema compatibility issues, this project serves as a functional, patched alternative for developers, researchers, and technical architects exploring CDR implementations.
 
-### Technical Enhancements in this Fork
+### Technical Enhancements in this Version
 *   **Focused API Scope:** Streamlined the data parsing pipelines to focus exclusively on Credit and Charge Card PRD schemas.
 *   **Expanded Endpoint Coverage:** Integrated API mappings for non-bank lender public endpoints, expanding the breadth of the technical demonstration beyond major ADIs.
 *   **Schema & Version Patches:** Resolved critical bugs in the `get product` API payloads and corrected version-header mismatch errors that were causing fetch failures in the legacy reference application.
@@ -33,5 +33,15 @@ Before you begin, ensure you have the following installed on your local machine:
 Clone this repository to your local machine by running the following command in your terminal:
 
 ```bash
-git clone https://github.com/ShaunCB/OpenCard-AU.git
+git clone [https://github.com/ShaunCB/OpenCard-AU.git](https://github.com/ShaunCB/OpenCard-AU.git)
 ```
+
+---
+
+## Contributing
+Contributions are welcome! If you encounter Data Holders updating their PRD schemas, or if you have improvements for data parsing and visualization, please feel free to open an issue or submit a Pull Request. 
+
+---
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. Originally adapted from the Consumer Data Standards Australia demonstration tool.
